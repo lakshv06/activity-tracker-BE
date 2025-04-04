@@ -1,15 +1,21 @@
 import express from "express";
-import dotenv from "dotenv";
+import cors from "cors";
 
-dotenv.config();
+function startServer() {
+  const app = express();
 
-function startServer(){
-    const app = express();
-    app.get('/', (req, res) => {
-        res.send('Hello World!');
-      });
-    
-    return app;
+  // Middleware (simplified for modern Express)
+  app.use(express.json()); // Replaces bodyParser.json()
+  app.use(express.urlencoded({ extended: true })); // Replaces bodyParser.urlencoded()
+  app.use(cors());
+
+  // Route handler
+  app.get("/", (req, res) => {
+    res.send(`<h1>Hello from Express!</h1>`);
+    console.log("GET / received");
+  });
+
+  return app;
 }
 
 export default startServer;
