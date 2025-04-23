@@ -17,13 +17,14 @@ router.post("/", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const queryText = "SELECT id FROM users WHERE email = $1";
+    const queryText = "SELECT id, name FROM users WHERE email = $1";
     const queryValues = [email];
 
     const result = await client.query(queryText, queryValues);
     client.release();
 
     if (result.rows.length > 0) {
+
       const token = jwt.sign({ email }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN,
       });
@@ -37,6 +38,7 @@ router.post("/", async (req, res) => {
           .send({
             token_response: token,
             email: email,
+            name: result.rows[0].name,
             message: "OTP sent to email",
           });
       } else {
