@@ -1,4 +1,4 @@
-import startServer from "./src/utility/server.js";
+import startServer from "./src/server.js";
 import dotenv from "dotenv";
 
 // Configure environment variables FIRST
