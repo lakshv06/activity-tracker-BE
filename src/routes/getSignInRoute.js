@@ -47,7 +47,7 @@ router.post("/", authenticateToken, async (req, res) => {
         // Set user data in Redis with an expiration time (e.g., 1 hour)
         redisClient.setEx(`user:${user.id}`, 3600, JSON.stringify(userData));
 
-        res.status(200).send({ message: "Login successful!" });
+        res.status(200).send({ message: "Login successful!", streak_data: {curr_streak: 10, max_streak: 25}});
       } else {
         res.status(401).send({ error: "Invalid password" });
       }
